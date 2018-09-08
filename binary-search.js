@@ -1,30 +1,29 @@
 // list is array of items to search
 // item is the thing being searched for
+// returns index of the item
 const binarySearch = (list, item) => {
     // keeep track of positions (index) in the array
-    let start = 0;
-    let end = list.length - 1;
+    let startIndex = 0; // starting index
+    let endIndex = list.length - 1; // ending index
 
     // loop until item is found or there is only 1 item left
-    while (start <= end) {
-        let mid = Math.floor((start + end) / 2); // look at the middle index (round down)
-        let guess = list[mid]; // value of mid index 
+    while (startIndex <= endIndex) {
+        let midIndex = Math.floor((startIndex + endIndex) / 2); // look at the middle index (round down)
+        let guess = list[midIndex]; // value of mid index 
 
         // found the item
         if (guess === item) {
-            return mid;
+            return midIndex;
         }
-        // guess is too high, so make the end 1 position to the left of mid
+        // guess is too high, so make the end index be 1 position to the left of mid
         else if (item < guess) {
-            end = mid - 1;
+            endIndex = midIndex - 1; // new end index
 
-            // guess is too high, so set start to be 1 position to the right of mid
+            // guess is too high, so set start index to be 1 position to the right of mid
         } else {
-            start = mid + 1;
+            startIndex = midIndex + 1; // new start index
         }
     }
-    return null;
+    return null; // item is not in the list
 }
 
-const myList = [1, 3, 5, 7, 9]
-console.log(binarySearch(myList, 3));
