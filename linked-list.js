@@ -23,8 +23,9 @@ function LinkedList() {
 	this.head = function() {
 		return head;
 	};
-	// to add and delete items, keep track of previous node and nect node
-	// add an item
+	// to add and delete items, keep track of previous node and next node
+
+	// when adding, find end of the list and add a node
 	this.add = function(value) {
 		const node = new Node(value); // create node
 
@@ -35,11 +36,11 @@ function LinkedList() {
 			let currentNode = head; // has nodes already
 
 			while (currentNode.next) {
-				// there's another node (i.e. not null)
-				currentNode = currentNode.next; // go to the next node
+				// there's another node (i.e. not null), so keep going until the end
+				currentNode = currentNode.next; // set the next node at current node
 			}
-
-			currentNode.next = node; // when there aren't any next nodes (reach end), add the node to the end
+			// no more nodes left
+			currentNode.next = node; // add the node (point next to the node)
 		}
 
 		length++; // increment size
@@ -47,7 +48,7 @@ function LinkedList() {
 
 	// remove an item
 	this.remove = function(value) {
-		const currentNode = head;
+		let currentNode = head;
 		let previousNode; // need to know the previous node in order to remove
 
 		// case where the head node is the one to be remove
@@ -63,7 +64,7 @@ function LinkedList() {
 			previousNode.next = currentNode.next;
 		}
 
-		length--;
+		length--; // decrease the size
 	};
 
 	// determine if a linked list is empty
@@ -149,13 +150,36 @@ function LinkedList() {
 }
 
 const conga = new LinkedList();
+
 conga.add('Kitten');
 conga.add('Puppy');
 conga.add('Dog');
 conga.add('Cat');
 conga.add('Fish');
+
 console.log(conga.size());
 console.log(conga.removeAt(3));
 console.log(conga.valueAt(3));
 console.log(conga.indexOf('Puppy'));
 console.log(conga.size());
+
+// linked list are deeply nested objects,
+// where next points to the next node object
+const conga = {
+	head: {
+		value: 'Kitten',
+		next: {
+			value: 'Puppy',
+			next: {
+				value: 'Dog',
+				next: {
+					value: 'Cat',
+					next: {
+						value: 'Fish',
+						next: null
+					}
+				}
+			}
+		}
+	}
+};
