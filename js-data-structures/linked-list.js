@@ -10,12 +10,12 @@ function Node(value, next, previous) {
 }
 
 const linkList1 = new LinkedList();
-console.log(linkList1);
+//console.log(linkList1);
 
 const node1 = new Node(7, 'node2', null); // head node
-console.log(node1);
+//console.log(node1);
 
-LinkedList.prototype.addToHead = function(value) {
+LinkedList.prototype.addToHead = function (value) {
 	const newNode = new Node(value, this.head, null); // this.head = null if list is empty
 
 	if (this.head) {
@@ -28,9 +28,15 @@ LinkedList.prototype.addToHead = function(value) {
 	this.head = newNode; // newNode is now the head
 };
 
-const linkedlist2 = new LinkedList();
-linkedlist2.addToHead(4);
-linkedlist2.addToHead(5);
-linkedlist2.addToHead(6);
+LinkedList.prototype.addToTail = function (value) {
+	const newNode = new Node(value, null, this.tail);
 
-console.log(linkedlist2);
+	// if the list is not empty
+	if (this.tail) {
+		this.tail.next = newNode;
+	} else {
+		// otherwise make it both head and tail
+		this.head = newNode;
+	}
+	this.tail = newNode; // newNode is the tail
+};
