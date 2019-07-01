@@ -40,3 +40,43 @@ LinkedList.prototype.addToTail = function (value) {
 	}
 	this.tail = newNode; // newNode is the tail
 };
+
+LinkedList.prototype.removeHead = function () {
+	// if list is empty
+	if (!this.head) {
+		return null;
+	}
+	let val = this.head.value;
+	this.head = this.head.next;
+	// if list is not empty
+	if (this.head) {
+		this.head.previous = null;
+	} else {
+		this.tail = null; // case where there is only 1 node
+	}
+	return val;
+};
+
+LinkedList.prototype.removeTail = function () {
+	// list is empty
+	if (!this.tail) {
+		return null
+	}
+	let val = this.tail.value;
+	this.tail = this.tail.previous // set the new tail
+	if (this.tail) {
+		this.tail.next = null // more than 1 node, so set the next to null
+	} else {
+		this.head = null // node is both head and tail
+	}
+	return val
+}
+
+const linkedlist2 = new LinkedList();
+
+linkedlist2.addToHead(1000);
+linkedlist2.addToHead(2000);
+linkedlist2.addToTail(3000);
+
+console.log(linkedlist2);
+console.log(linkedlist2.removeTail());
