@@ -72,11 +72,24 @@ LinkedList.prototype.removeTail = function () {
 	return val
 }
 
+LinkedList.prototype.search = function (searchValue) {
+	let currentNode = this.head // start searching at head node
+
+	while (currentNode) {
+		if (currentNode.value === searchValue) {
+			return currentNode.value // return the node
+		}
+		currentNode = currentNode.next // set current node to the next node
+	}
+	return null // value doesn't exist
+}
+
 const linkedlist2 = new LinkedList();
 
-linkedlist2.addToHead(1000);
-linkedlist2.addToHead(2000);
-linkedlist2.addToTail(3000);
+linkedlist2.addToHead('apples');
+linkedlist2.addToHead('oranges');
+linkedlist2.addToTail('berries');
+linkedlist2.addToHead('strawberries');
 
-console.log(linkedlist2);
-console.log(linkedlist2.removeTail());
+console.log(linkedlist2.search('berries'));
+console.log(linkedlist2.search('steak'));
