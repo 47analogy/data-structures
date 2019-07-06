@@ -84,6 +84,22 @@ LinkedList.prototype.search = function (searchValue) {
 	return null // value doesn't exist
 }
 
+LinkedList.prototype.indexOf = function (searchValue) {
+	let index = 0;
+	const indexArr = [];
+
+	let searchNode = this.head;
+
+	while (searchNode) {
+		if (searchNode.value === searchValue) {
+			indexArr.push(index);
+		}
+		searchNode = searchNode.next;
+		index++;
+	}
+	return indexArr;
+}
+
 const linkedlist2 = new LinkedList();
 
 linkedlist2.addToHead('apples');
