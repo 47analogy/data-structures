@@ -13,7 +13,7 @@ class BinarySearchTree {
                 this.left = new BinarySearchTree(value); // make it the left node (new tree)
             } else if (this.left) {
                 // case: there is already a left node
-                this.left = this.insert(value); // recurse and insert value
+                this.left.insert(value); // recurse on left node and insert value
             }
         }
         // value is higher, insert right
@@ -23,7 +23,35 @@ class BinarySearchTree {
                 this.right = new BinarySearchTree(value); // make it the right node (new tree)
             } else if (this.right) {
                 // case: there is already a right node
-                this.right = this.insert(value); // recurse and insert value
+                this.right.insert(value); // recurse on right node and insert value
+            }
+        }
+    }
+
+    contains(value) {
+        // parent or current node is the value
+        if (value === this.value) {
+            return true;
+        }
+
+        // value is less than current node
+        if (value < this.value) {
+            // case: aren't any more left child nodes
+            if (!this.left) {
+                return false;
+            } else if (this.left) {
+                // case: keep searching left of current node
+                return this.left.contains(value); // call contains recursively on left node
+            }
+        }
+        // value is higher than current node
+        if (value > this.value) {
+            // case: aren't any more right child nodes
+            if (!this.right) {
+                return false;
+            } else if (this.right) {
+                // case: keep searching right of current node
+                return this.right.contains(value); // call contains recursively on right node
             }
         }
     }
@@ -43,6 +71,6 @@ bst.insert(85);
 bst.insert(105);
 bst.insert(10);
 
-console.log(bst.left.right); // 45
-console.log(bst.left.right.left); // 35
-console.log(bst.right.right.left); // 85
+console.log(bst.contains(20)); // true
+console.log(bst.contains(100)); // true
+console.log(bst.contains(4)); // false
