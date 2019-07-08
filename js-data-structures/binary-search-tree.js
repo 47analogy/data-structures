@@ -56,6 +56,21 @@ class BinarySearchTree {
         }
     }
 
+    depthFirstSearch(iteratorFunc) {
+        // travelling in order from least to greatest
+
+        // travel left to bottom
+        if (this.left) {
+            this.left.depthFirstSearch(iteratorFunc); // recurse down to left
+        }
+        // travel to parent
+        iteratorFunc(this.value); // go back to parent
+        // travel right to bottom
+        if (this.right) {
+            this.right.depthFirstSearch(iteratorFunc); // recurse down to right
+        }
+    }
+
 }
 
 const bst = new BinarySearchTree(50);
@@ -71,6 +86,9 @@ bst.insert(85);
 bst.insert(105);
 bst.insert(10);
 
-console.log(bst.contains(20)); // true
-console.log(bst.contains(100)); // true
-console.log(bst.contains(4)); // false
+bst.depthFirstSearch(logTree)
+
+// iterator Function
+function logTree(value) {
+    console.log(value); // 10, 20, 30, 35, 45, 50, 59, 60, 70, 85, 100, 105
+}
