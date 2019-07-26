@@ -19,9 +19,42 @@ HashTable.prototype.hash = function(key) {
 	for (let i = 0; i < key.length; i++) {
 		total += key.charCodeAt(i);
 	}
-	const bucket = total % this.numBuckets; // gets value between 0 and number of buckets
-	return bucket; //
+	const bucket = total % this.numBuckets; // gets 0 < value < number of buckets
+	return bucket;
 };
 
-const hashTable = new HashTable(20); // hash table with 20 buckets
-console.log(hashTable.hash('apples'));
+// inserts or updates hash node into hash table bucket
+HashTable.prototype.insert = function(key, value) {
+	// create index to store data
+	const index = this.hash(key);
+
+	const newNode = new HashNode(key, value);
+	const currentNode = this.buckets[index];
+
+	// if hash table is empty
+	if (!this.buckets[index]) {
+		this.buckets[index] = newNode;
+	} else if (this.buckets[index].key === key) {
+		// checks if first node is the one to be updated/overwritten
+		this.buckets[index].value = value;
+	} else {
+		// if hash table has data already, travel to the end
+		while (currentNode.next) {
+			// update/overwrite data
+			if (currentNode.key === key) {
+				currentNode.value = value;
+				return;
+			}
+			currentNode = currentNode.next;
+		}
+		// add the new hash node
+		currentNode = newNode;
+	}
+};
+
+const hashTable = new HashTable(10); // hash table with 20 buckets
+hashTable.insert('apples', 5.99);
+hashTable.insert('oranges', 2.99);
+console.log(hashTable);
+hashTable.insert('apples', 7.99); // update apples
+console.log(hashTable);
