@@ -52,9 +52,36 @@ HashTable.prototype.insert = function(key, value) {
 	}
 };
 
+// retreive data from hash table
+HashTable.prototype.get = function(key) {
+	// figure out which bucket to look into by hashing key
+	const index = this.hash(key);
+
+	// check if bucket is empty
+	if (!this.buckets[index]) {
+		return null;
+	} else {
+		// otherwise loop through nodes in bucket to get the data for the key
+		let currentNode = this.buckets[index];
+
+		while (currentNode) {
+			if (currentNode.key === key) {
+				return currentNode.value;
+			}
+			currentNode.next;
+		}
+		return null; // nothing found
+	}
+};
+
+// Separate chaining: store all the key-pairs that generate collisions in a list and loop through them
+// Open addressing: store only 1 key, value pair in each bucket
+
 const hashTable = new HashTable(10); // hash table with 20 buckets
 hashTable.insert('apples', 5.99);
 hashTable.insert('oranges', 2.99);
 console.log(hashTable);
 hashTable.insert('apples', 7.99); // update apples
-console.log(hashTable);
+
+console.log(hashTable.get('apples')); // 7.99
+console.log(hashTable.get('oranges')); // 2.99
